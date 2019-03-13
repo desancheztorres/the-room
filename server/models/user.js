@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -25,6 +26,17 @@ const userSchema = new Schema({
         max: [32, 'Too long, max is 128 characters']
     },
     rentals: [{ type: Schema.Types.ObjectId, ref: 'Rental' }]
+});
+
+userSchema.pre('save', function(next) {
+    // Get the user with this
+    const user = this;
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            user.password = hash;
+            next(); // Go to the next function in the queue, save the user
+        });
+    });
 });
 
 module.exports = mongoose.model('User', userSchema);
