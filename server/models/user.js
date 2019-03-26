@@ -25,8 +25,12 @@ const userSchema = new Schema({
         min: [4, 'Too short, min is 4 characters'],
         max: [32, 'Too long, max is 128 characters']
     },
-    rentals: [{ type: Schema.Types.ObjectId, ref: 'Rental' }]
+    rentals: [{ type: Schema.Types.ObjectId, ref: 'Rental' }]    
 });
+
+userSchema.methods.hasSamePassword = function(requestedPassword) {
+    return bcrypt.compareSync(requestedPassword, this.password);
+};
 
 userSchema.pre('save', function(next) {
     // Get the user with this
