@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './common/header/header.component';
 import { MapModule } from './common/map/map.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { MapModule } from './common/map/map.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MapModule
+    MapModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
